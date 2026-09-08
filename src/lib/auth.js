@@ -1,0 +1,1 @@
+export function getCurrentUser(){return JSON.parse(localStorage.getItem("uapg_user")||"null")}export function signInDemo(email){const user={id:btoa(email).replace(/=/g,""),email};localStorage.setItem("uapg_user",JSON.stringify(user));return user}export function signOut(){localStorage.removeItem("uapg_user")}
