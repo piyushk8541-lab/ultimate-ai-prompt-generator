@@ -1,0 +1,1 @@
+export const DAILY_LIMITS={free:5,pro:25,ultimate:50};export function dailyLimit(tier){return DAILY_LIMITS[tier]||DAILY_LIMITS.free}
