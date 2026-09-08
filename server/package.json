@@ -1,0 +1,1 @@
+{"name":"uapg-server","private":true,"type":"module","scripts":{"dev":"node index.js"},"dependencies":{"cors":"latest","dotenv":"latest","express":"latest","express-rate-limit":"latest"}}
