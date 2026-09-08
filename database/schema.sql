@@ -1,0 +1,3 @@
+create table if not exists profiles (id uuid primary key, email text, tier text not null default 'free', subscription_status text not null default 'active', created_at timestamptz default now());
+create table if not exists daily_usage (id bigint generated always as identity primary key, user_id uuid not null, usage_date date not null default current_date, prompt_count integer not null default 0, updated_at timestamptz default now(), unique(user_id,usage_date));
+create index if not exists daily_usage_user_date_idx on daily_usage(user_id,usage_date);
