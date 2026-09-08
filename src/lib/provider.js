@@ -1,0 +1,1 @@
+export async function generatePrompt(input){const base=import.meta.env.VITE_API_BASE_URL||"";const r=await fetch(base+"/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(input)});const d=await r.json();if(!r.ok)throw new Error(d.error||"Generation failed");return d}
