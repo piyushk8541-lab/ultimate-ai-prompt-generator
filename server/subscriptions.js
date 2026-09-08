@@ -1,0 +1,1 @@
+export const PLANS={pro:{amount:299,currency:"INR",dailyLimit:25},ultimate:{amount:499,currency:"INR",dailyLimit:50}};export function getPlan(id){return PLANS[id]||null}
