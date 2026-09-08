@@ -1,0 +1,1 @@
+export const TIERS={free:{name:"Free",dailyLimit:5,price:0},pro:{name:"Pro",dailyLimit:25,price:299},ultimate:{name:"Ultimate",dailyLimit:50,price:499}};export const getTier=t=>TIERS[t]||TIERS.free;
