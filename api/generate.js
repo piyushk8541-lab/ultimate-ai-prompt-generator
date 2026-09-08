@@ -1,1 +1,18 @@
-const categories={};export default async function handler(req,res){if(req.method!=="POST")return res.status(405).json({error:"Method not allowed"});const{category,topic,tone="Professional",length="Medium",platform="",tier="free"}=req.body||{};if(!topic||!category)return res.status(400).json({error:"Topic and category are required"});const key=process.env.GEMINI_API_KEY;if(!key)return res.status(500).json({error:"GEMINI_API_KEY is not configured"});const instruction=`You are Ultimate AI Prompt Generator. Create ONE high-quality, ready-to-copy prompt for an AI model. Category: ${category}. User goal: ${topic}. Tone: ${tone}. Length preference: ${length}. Target platform: ${platform||"General"}. Tier: ${tier}. Follow category best practices. Make the final prompt actionable, specific and structured. For image prompts include subject, style, composition, lighting, camera/perspective and quality details. For SEO include keyword intent, audience, structure and constraints. Return only the final prompt, no commentary.`;try{const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:instruction}]}]})});const d=await r.json();if(!r.ok)throw new Error(d.error?.message||"Gemini error");const prompt=d.candidates?.[0]?.content?.parts?.map(p=>p.text).join("\n");if(!prompt)throw new Error("No prompt returned");return res.status(200).json({prompt})}catch(e){return res.status(500).json({error:e.message})}}
+export default async function handler(req,res){
+  if(req.method!=="POST") return res.status(405).json({error:"Method not allowed"});
+  const {category,topic,tone="Professional",length="Medium",platform="",tier="free"}=req.body||{};
+  if(!topic||!category) return res.status(400).json({error:"Topic and category are required"});
+  const key=process.env.GEMINI_API_KEY;
+  if(!key) return res.status(500).json({error:"GEMINI_API_KEY is not configured"});
+  const instruction=`You are Ultimate AI Prompt Generator. Create ONE high-quality, ready-to-copy prompt for an AI model. Category: ${category}. User goal: ${topic}. Tone: ${tone}. Length preference: ${length}. Target platform: ${platform||"General"}. Tier: ${tier}. Follow category best practices. Make the final prompt actionable, specific and structured. For image prompts include subject, style, composition, lighting, camera/perspective and quality details. For SEO include keyword intent, audience, structure and constraints. Return only the final prompt, no commentary.`;
+  try{
+    const response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${key}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:instruction}]}]})});
+    const data=await response.json();
+    if(!response.ok)throw new Error(data.error?.message||"Gemini error");
+    const prompt=data.candidates?.[0]?.content?.parts?.map(p=>p.text).join("\n");
+    if(!prompt)throw new Error("No prompt returned");
+    return res.status(200).json({prompt});
+  }catch(error){
+    return res.status(500).json({error:error.message||"Generation failed"});
+  }
+}
