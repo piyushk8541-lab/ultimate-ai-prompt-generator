@@ -1,0 +1,1 @@
+export const PLANS={free:{dailyLimit:5,price:0},pro:{dailyLimit:25,price:299},ultimate:{dailyLimit:50,price:499}};export function limitForTier(tier){return(PLANS[tier]||PLANS.free).dailyLimit}
