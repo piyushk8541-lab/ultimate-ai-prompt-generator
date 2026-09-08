@@ -1,0 +1,1 @@
+const prefix="uapg_usage_v1_";export function todayKey(userId="guest"){return prefix+userId+"_"+new Date().toISOString().slice(0,10)}export function getUsage(userId="guest"){return Number(localStorage.getItem(todayKey(userId))||0)}export function incrementUsage(userId="guest"){const k=todayKey(userId),n=getUsage(userId)+1;localStorage.setItem(k,String(n));return n}
